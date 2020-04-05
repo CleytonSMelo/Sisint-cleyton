@@ -56,30 +56,35 @@ public class InicioClienteController extends Controlador {
 //        resultado.use(Results.json()).withoutRoot().from(informacoes).serialize();
 //    }
     
-    @Path("/")
+    @Path("/home")
     public void index2(){
-        resultado.include("totalServicos",servicoDao.contarTotalServicos());
-        resultado.include("servicosAbertos",servicoDao.contarServicosStatus(StatusServico.EM_ESPERA));
-        resultado.include("servicosExecucao",servicoDao.contarServicosStatus(StatusServico.EM_EXECUCAO));
-        resultado.include("totalTarefas",tarefaDao.contarTotalTarefas());
-
-        resultado.include("totalManutencoes",manutencaoDao.contarTotalManutencoes());
-        resultado.include("manutencoesAbertas",manutencaoDao.contarManutencoesStatus(StatusManutencao.AGUARDANDO_MANUTENCAO));
-        resultado.include("totalEquipamentos",equipamentoDao.contarTotalEquipamentos());
-        resultado.include("tarefasPendentes", tarefaDao.minhasTarefas().size());
-        resultado.include("meusServicos", servicoDao.meusServicos());
-
-        resultado.include("dezUltimasTarefas", tarefaDao.buscarDezUltimas());
+		/*
+		 * resultado.include("totalServicos",servicoDao.contarTotalServicos());
+		 * resultado.include("servicosAbertos",servicoDao.contarServicosStatus(
+		 * StatusServico.EM_ESPERA));
+		 * resultado.include("servicosExecucao",servicoDao.contarServicosStatus(
+		 * StatusServico.EM_EXECUCAO));
+		 * resultado.include("totalTarefas",tarefaDao.contarTotalTarefas());
+		 * 
+		 * resultado.include("totalManutencoes",manutencaoDao.contarTotalManutencoes());
+		 * resultado.include("manutencoesAbertas",manutencaoDao.contarManutencoesStatus(
+		 * StatusManutencao.AGUARDANDO_MANUTENCAO));
+		 * resultado.include("totalEquipamentos",equipamentoDao.contarTotalEquipamentos(
+		 * )); resultado.include("tarefasPendentes", tarefaDao.minhasTarefas().size());
+		 * resultado.include("meusServicos", servicoDao.meusServicos());
+		 * 
+		 * resultado.include("dezUltimasTarefas", tarefaDao.buscarDezUltimas());
+		 */
     }
    
-    @Path("/info")
+    @Path("/infoex")
     @Get
     public void info() {
         JsonElement informacoes = dashboardNegocio.servicosPorSetor();
         resultado.use(Results.json()).withoutRoot().from(informacoes).serialize();
     }
 
-    @Path("/informacoes")
+    @Path("/informacoesexterno")
     @Get
     public void informacoes() {
 

@@ -62,7 +62,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                     <c:if test="${usuarioLogado.isAdmin() || usuarioLogado.isTecnico()}">
                     <a class="navbar-brand" href="${linkTo[InicioController].index}">SisInt 2.0</a>
+                     </c:if>
+                     
+                     <c:if test="${usuarioLogado.isCliente()}">
+                    <a class="navbar-brand" href="${linkTo[InicioClienteController].index2}">SisInt 2.0</a>
+                     </c:if>
+                     
                 </div>
                 <!-- /.navbar-header -->
 
@@ -179,9 +186,18 @@
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
+                        <c:if test="${usuarioLogado.isAdmin() || usuarioLogado.isTecnico()}">
                             <li>
                                 <a href="${linkTo[InicioController].index}"><i class="fa fa-home fa-fw"><c:out value=""/></i> Home</a>
                             </li>
+                         </c:if>   
+                          <c:if test="${usuarioLogado.isCliente()}">
+                            <li>
+                                <a href="${linkTo[InicioClienteController].index2}"><i class="fa fa-home fa-fw"><c:out value=""/></i> Home</a>
+                            </li>
+                         </c:if>  
+                         
+                         <c:if test="${usuarioLogado.isAdmin() || usuarioLogado.isTecnico()}"> 
                             <li>
                                 <a href="#"><i class="fa fa-th-list fa-fw"><c:out value=""/></i> Ordem de Serviço<i class="fa arrow"><c:out value=""/></i></a>
                                 <ul class="nav nav-second-level">
@@ -205,6 +221,34 @@
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
+                             </c:if> 
+                             
+                              <c:if test="${usuarioLogado.isCliente()}"> 
+                            <li>
+                                <a href="#"><i class="fa fa-th-list fa-fw"><c:out value=""/></i> Ordem de Serviço<i class="fa arrow"><c:out value=""/></i></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="${linkTo[ServicosClienteController].form}">Novo Serviço</a>
+                                    </li>
+<!--                                     <li> -->
+<!--                                         <a href="${linkTo[ServicosController].meusServicos}">Meus Serviços</a> -->
+<!--                                     </li> -->
+                                    <li>
+                                        <a href="${linkTo[ServicosClienteController].servicosAbertos}">Ver Serviços Abertos</a>
+                                    </li>
+<!--                                     <c:if test="${usuarioLogado.isAdmin()}"> -->
+<!--                                         <li> -->
+<!--                                             <a href="${linkTo[ServicosController].lista}">Ver Todos os Serviços</a> -->
+<!--                                         </li> -->
+<!--                                         <li> -->
+<!--                                             <a href="${linkTo[ServicosController].formRelatorio}">Relatório</a> -->
+<!--                                         </li> -->
+<!--                                     </c:if> -->
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                             </c:if>  
+                            <c:if test="${usuarioLogado.isAdmin() || usuarioLogado.isTecnico()}">
                             <li>
                                 <a href="#"><i class="fa fa-tasks fa-fw"><c:out value=""/></i> Tarefas<i class="fa arrow"><c:out value=""/></i></a>
                                 <ul class="nav nav-second-level">
@@ -220,6 +264,7 @@
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
+                            </c:if>
                             <!--<li>-->
                                 <!--<a href="#"><i class="fa fa-wrench fa-fw"><c:out value=""/></i> Manutenção<i class="fa arrow"><c:out value=""/></i></a>-->
                                 <!--<ul class="nav nav-second-level">-->
@@ -235,6 +280,7 @@
                                 <!--</ul>-->
                                 <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
                             <!--</li>-->
+                             <c:if test="${usuarioLogado.isAdmin() || usuarioLogado.isTecnico()}">
                             <li>
                                 <a href="#"><i class="fa fa-laptop fa-fw"><c:out value=""/></i> Equipamentos<i class="fa arrow"><c:out value=""/></i></a>
                                 <ul class="nav nav-second-level">
@@ -247,6 +293,8 @@
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
+                            </c:if>
+                             <c:if test="${usuarioLogado.isAdmin() || usuarioLogado.isTecnico()}">
                             <li>
                                 <a href="#"><i class="fa fa-building fa-fw"><c:out value=""/></i> Setores<i class="fa arrow"><c:out value=""/></i></a>
                                 <ul class="nav nav-second-level">
@@ -262,6 +310,7 @@
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
+                            </c:if>
                            <!-- bloqueio de url cadastro usuario -->
                             <c:if test="${usuarioLogado.isAdmin()}"> 
                                 <li>
@@ -289,9 +338,16 @@
                                 <!--</ul>-->
                                 <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
                             <!--</li>-->
+                             <c:if test="${usuarioLogado.isAdmin()}">
                             <li>
                                 <a href="${linkTo[InicioController].informacoes}"><i class="fa fa-info-circle fa-fw"><c:out value=""/></i> Informações Gerais</a>
                             </li>
+                             </c:if>
+                             <c:if test="${usuarioLogado.isCliente()}">
+                            <li>
+                                <a href="${linkTo[InicioClienteController].informacoes}"><i class="fa fa-info-circle fa-fw"><c:out value=""/></i> Informações Gerais</a>
+                            </li>
+                             </c:if>
                         </ul>
                     </div>
                     <!-- /.sidebar-collapse -->

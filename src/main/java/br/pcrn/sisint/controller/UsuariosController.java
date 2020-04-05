@@ -9,6 +9,7 @@ import br.pcrn.sisint.anotacoes.Transacional;
 import br.pcrn.sisint.dao.UsuarioDao;
 import br.pcrn.sisint.dominio.TipoUsuario;
 import br.pcrn.sisint.dominio.Usuario;
+import br.pcrn.sisint.dominio.UsuarioLogado;
 import br.pcrn.sisint.util.Criptografia;
 import br.pcrn.sisint.util.OpcaoSelect;
 
@@ -24,18 +25,19 @@ import java.util.Optional;
 public class UsuariosController extends ControladorSisInt<Usuario> {
 
     UsuarioDao usuarioDao;
-
+    private UsuarioLogado usuarioLogado;
     /**
      * @deprecated CDI eyes only
      */
     protected UsuariosController() {
-        this(null, null);
+        this(null, null, null);
     }
 
     @Inject
-    public UsuariosController(UsuarioDao usuarioDao, Result resultado) {
+    public UsuariosController(UsuarioDao usuarioDao, Result resultado, UsuarioLogado usuarioLogado) {
         super(resultado);
         this.usuarioDao = usuarioDao;
+        this.usuarioLogado = usuarioLogado;
     }
 
     @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
@@ -81,7 +83,13 @@ public class UsuariosController extends ControladorSisInt<Usuario> {
         if(Criptografia.criptografar(usuario.getSenha()).equals(usuarioBanco.getSenha()) && usuario.getNovaSenha().equals(usuario.getConfirmaSenha())) {
             usuarioBanco.setSenha(Criptografia.criptografar(usuario.getNovaSenha()));
             resultado.include("mensagem", new SimpleMessage("success","mensagem.salvar.sucesso"));
-            resultado.redirectTo(InicioController.class).index();
+            
+            if(usuarioLogado.isAdmin()|| usuarioLogado.isTecnico()) {
+            	 resultado.redirectTo(InicioController.class).index();
+            }else {
+            	resultado.redirectTo(InicioClienteController.class).index2();
+            }
+                                 
         } else {
             resultado.include("mensagem", new SimpleMessage("error","mensagem.dadoIncorreto"));
             resultado.redirectTo(PerfilController.class).form(usuario.getId());
