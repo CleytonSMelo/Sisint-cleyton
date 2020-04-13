@@ -32,51 +32,31 @@
                 <!-- /.col-lg-12 -->
             </div>
             
-            <div class="panel-body" style="padding-top: 0px;">
-<%--                 <a class="btn btn-info" style="margin-bottom: 16px;" href="${linkTo[ServicosClienteController].form}">Cadastrar</a> --%>
-                <div class="tabela-servicos">
-                    <table class="table table-bordered tabela">
-                        <thead>
-                        <tr>
-                            <th>Titulo</th>
-                            <th>Prioridade</th>
-                            <th>Data de Abertura</th>
-                            <th>Prazo Final</th>
-                            <th>Setor</th>
-                            <th>Técnico</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${servicos}" var="servico">
-                            <tr>
-                                <td>${servico.titulo}</td>
-                                <td><span class="label label-prioridade">${servico.prioridade.chave}</span></td>
-                                <td class="date-column">${servico.dataAbertura}</td>
-                                <td class="date-column">${servico.dataFechamento}</td>
-                                <td>${servico.setor.nome}</td>
-                                <td>${servico.tecnico.nome}</td>
-                                <td><span class="label label-status">${servico.statusServico.chave}</span></td>
-                                <td>
-                                    <a title="Detalhes" href="${linkTo[ServicosClienteController].detalhes}?id=${servico.id}">
-                                        <i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
-<%--                                     <c:if test="${usuarioLogado.isAdmin()}"> --%>
-<%--                                         <a title="Log do serviço" href="${linkTo[ServicosController].logServico}?id=${servico.id}"> --%>
-<!--                                             <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i></a> -->
-<%--                                     </c:if> --%>
-                                    <a title="Editar" href="${linkTo[ServicosClienteController].editar}?id=${servico.id}">
-                                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="false"></i></a>
-                                    <a title="Assumir Serviço" class="assumir-servico" id-servico="${servico.id}" data-toggle="modal" href="#myModal">
-                                        <i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-
-                        </tbody>
-                    </table>
+            <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Últimas Tarefas
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <c:forEach items="${todosServicos}" var="servico">
+                                        <a href="${linkTo[ServicosClienteController].detalhes}?id=${servico.id}" class="list-group-item">
+                                            ${servico.titulo}
+                                            <span class="pull-right text-muted small date-column"><em>${servico.dataFechamento}</em>
+                                            </span>
+                                            <span class="pull-right text-muted small" style="padding-right: 15px;"><em>${servico.tecnico.nome}</em>
+                                            </span>
+                                        </a>
+                                </c:forEach>
+                            </div>
+                            <!-- /.list-group -->
+                            <a href="${linkTo[TarefasController].lista}" class="btn btn-default btn-block">Ver Todas as Tarefas</a>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
                 </div>
-            </div>
             
             
             <!-- /.row -->

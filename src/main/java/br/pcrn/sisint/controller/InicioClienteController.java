@@ -75,14 +75,15 @@ public class InicioClienteController extends Controlador {
 		 * 
 		 * resultado.include("dezUltimasTarefas", tarefaDao.buscarDezUltimas());
 		 */
+    	resultado.include("todosServicos", servicoDao.buscarTodosServicos());
     }
    
-    @Path("/infoex")
-    @Get
-    public void info() {
-        JsonElement informacoes = dashboardNegocio.servicosPorSetor();
-        resultado.use(Results.json()).withoutRoot().from(informacoes).serialize();
-    }
+//    @Path("/info")
+//    @Get
+//    public void info() {
+//        JsonElement informacoes = dashboardNegocio.servicosPorSetor();
+//        resultado.use(Results.json()).withoutRoot().from(informacoes).serialize();
+//    }
 
     @Path("/informacoesexterno")
     @Get

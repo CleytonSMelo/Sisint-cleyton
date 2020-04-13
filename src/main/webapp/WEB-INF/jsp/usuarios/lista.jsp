@@ -67,8 +67,9 @@
                             <th>Login</th>
                             <th>Email</th>
                             <th>Telefone</th>
-                            <th>Tipo</th>
-                            <th>Ações</th>
+                            <th>Tipo</th> 
+                            <th>Setor</th>                          
+                            <th>Ações</th>                          
                         </tr>
                         </thead>
                         <tbody>
@@ -79,7 +80,8 @@
                                 <td>${usuario.login}</td>
                                 <td>${usuario.email}</td>
                                 <td>${usuario.telefone}</td>
-                                <td>${usuario.tipoUsuario.valor}</td>
+                                <td>${usuario.tipoUsuario.valor}</td> 
+                                <td>${usuario.setor.nome}</td>                             
                                 <td><a title="Detalhes" href="#"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
                                     <a title="Editar" href="${linkTo[UsuariosController].editar}?id=${usuario.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     <c:if test="${usuarioLogado.isAdmin()}">

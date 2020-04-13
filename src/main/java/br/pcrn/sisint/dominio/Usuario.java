@@ -22,6 +22,9 @@ public class Usuario extends Entidade{
     private String email;
 
     private String telefone;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Setor setor;
 
     private String senha;
 
@@ -147,5 +150,13 @@ public class Usuario extends Entidade{
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+    
+    public Setor getSetor() {
+        return setor;
+    }
+
+    public void setSetor(Setor setor) {
+        this.setor = setor;
     }
 }

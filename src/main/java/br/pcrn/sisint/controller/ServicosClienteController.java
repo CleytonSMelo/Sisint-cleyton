@@ -72,7 +72,7 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
     }
 
 
-    @Post("/servicos")
+    @Post("/servicosExterno")
     @Transacional
     public void salvar(Servico servico) {
         try {

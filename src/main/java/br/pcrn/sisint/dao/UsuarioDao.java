@@ -1,6 +1,7 @@
 
 package br.pcrn.sisint.dao;
 
+import br.pcrn.sisint.dominio.Servico;
 import br.pcrn.sisint.dominio.Usuario;
 
 import java.util.Collection;
@@ -14,4 +15,8 @@ public interface UsuarioDao extends EntidadeDao<Usuario> {
 
     Optional<Usuario> buscarPorLogin(String login);
     List<Usuario> listarAptos();
+    //List<Usuario> listarTodos();
+    
+    @Override
+    List<Usuario> listar();
 }

@@ -3,6 +3,7 @@ package br.pcrn.sisint.dao;
 import br.pcrn.sisint.dominio.LogServico;
 import br.pcrn.sisint.dominio.Servico;
 import br.pcrn.sisint.dominio.StatusServico;
+import br.pcrn.sisint.dominio.Tarefa;
 
 import javax.ejb.Local;
 import java.time.LocalDate;
@@ -14,6 +15,8 @@ import java.util.List;
 public interface ServicoDao extends EntidadeDao<Servico> {
     Long contarTotalServicos();
     Long contarServicosStatus(StatusServico statusServico);
+    
+    List<Servico> buscarTodosServicos();
     @Override
     List<Servico> listar();
 

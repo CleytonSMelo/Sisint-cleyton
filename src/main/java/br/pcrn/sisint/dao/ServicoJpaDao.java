@@ -118,7 +118,8 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
 
         return (Long) query.getSingleResult();
     }
-
+    
+    //lista serviços
     @Override
     public List<Servico> listarServicos() {
         Query query = manager.createQuery("select s from Servico s where s.deletado = false");
@@ -292,6 +293,16 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
 
         return informacoes;
     }
+    
+    //novo methodo criado
+	@Override
+	public List<Servico> buscarTodosServicos() {
+		 Query query = manager.createQuery("SELECT s FROM Servico s ORDER BY s.dataFechamento DESC")
+	                .setMaxResults(9);
+	        List<Servico> servico = query.getResultList();
+	        return servico;
+		
+	}
 
     //    @Override
 //    public List<Servico> filtrarPorMesAno(int mes, int ano) {

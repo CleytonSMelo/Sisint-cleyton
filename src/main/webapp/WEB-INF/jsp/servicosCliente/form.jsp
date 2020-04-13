@@ -47,7 +47,7 @@
             <!-- /.col-lg-12 -->
         </div>
         <div class="panel painel-cadastro-sisint">
-            <form id="form-servico-tarefa" action="${linkTo[ServicosController].salvar}" method="post">
+            <form id="form-servico-tarefa" action="${linkTo[ServicosClienteController].salvar}" method="post">
                 <c:forEach items="${listaLogs}" var="log" varStatus="status">
                     <input type="hidden" name="servico.logServicos[${status.index}].id" value="${log.id}"/>
                     <input type="hidden" name="servico.logServicos[${status.index}].log" value="${log.log}"/>
@@ -60,7 +60,7 @@
 
                 </div>
                 <div class="panel-body">
-                    <input id="urlSalvar" type="hidden" value="${linkTo[ServicosController].salvar}"/>
+                    <input id="urlSalvar" type="hidden" value="${linkTo[ServicosClienteController].salvar}"/>
                     <div id="cadastro-servico">
                         <div class="row">
                             <input id="servico-id" type="hidden" name="servico.id" value="${servico.id}"/>

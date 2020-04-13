@@ -6,15 +6,20 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.pcrn.sisint.anotacoes.Seguranca;
 import br.pcrn.sisint.anotacoes.Transacional;
+import br.pcrn.sisint.dao.SetorDao;
 import br.pcrn.sisint.dao.UsuarioDao;
+import br.pcrn.sisint.dominio.Servico;
 import br.pcrn.sisint.dominio.TipoUsuario;
 import br.pcrn.sisint.dominio.Usuario;
 import br.pcrn.sisint.dominio.UsuarioLogado;
+import br.pcrn.sisint.negocio.ServicosNegocio;
+import br.pcrn.sisint.negocio.SetorNegocio;
 import br.pcrn.sisint.util.Criptografia;
 import br.pcrn.sisint.util.OpcaoSelect;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,23 +31,30 @@ public class UsuariosController extends ControladorSisInt<Usuario> {
 
     UsuarioDao usuarioDao;
     private UsuarioLogado usuarioLogado;
+    private SetorDao setorDao;
+    private SetorNegocio setorNegocio;
+    
+   
     /**
      * @deprecated CDI eyes only
      */
     protected UsuariosController() {
-        this(null, null, null);
+        this(null, null, null, null,null);
     }
 
     @Inject
-    public UsuariosController(UsuarioDao usuarioDao, Result resultado, UsuarioLogado usuarioLogado) {
+    public UsuariosController(UsuarioDao usuarioDao, Result resultado, UsuarioLogado usuarioLogado, SetorNegocio setorNegocio,SetorDao setorDao) {
         super(resultado);
         this.usuarioDao = usuarioDao;
         this.usuarioLogado = usuarioLogado;
+        this.setorNegocio = setorNegocio;
+        this.setorDao = setorDao;
     }
 
     @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
     public void form(){
         this.resultado.include("tipoUsuario", OpcaoSelect.toListaOpcoes(TipoUsuario.values()));
+        this.resultado.include("setores", setorNegocio.gerarListaOpcoesSetor());
     }
 
     @Post("/usuarios")
@@ -51,6 +63,7 @@ public class UsuariosController extends ControladorSisInt<Usuario> {
         usuario.setDataCadastro(LocalDate.now());
         usuario.setDeletado(false);
         usuario.setSenha(criptografarSenha(usuario.getSenha()));
+        usuario.setSetor(usuario.getSetor());
         this.usuarioDao.salvar(usuario);
         resultado.include("mensagem", new SimpleMessage("success","mensagem.salvar.sucesso"));
         resultado.redirectTo(UsuariosController.class).lista();
@@ -66,13 +79,19 @@ public class UsuariosController extends ControladorSisInt<Usuario> {
 
     @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
     public void lista() {
-        resultado.include("usuarios", usuarioDao.listar());
+    	
+    	List<Usuario> usuario = this.usuarioDao.listar();
+        resultado.include("usuarios", usuario);
+    	
+        //resultado.include("usuarios", usuarioDao.listar());
+        
     }
 
     @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
     public void editar(Long id) {
         Usuario usuario = usuarioDao.buscarPorId(id);
         this.resultado.include("tipoUsuario", OpcaoSelect.toListaOpcoes(TipoUsuario.values()));
+        this.resultado.include("setores", setorNegocio.gerarListaOpcoesSetor());
         this.resultado.include("usuario", usuario);
         resultado.of(this).form();
     }

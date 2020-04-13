@@ -72,6 +72,22 @@
                             <div class="help-block with-errors"></div>
                         </div>
                         <div class="form-group">
+                                <label for="setor-usuario">Setor </label>
+                                <select class="form-control" required id="setor-usuario" name="usuario.setor.id">
+                                    <option value=""></option>
+                                    <c:forEach items="${setores}" var="setor">
+                                        <c:if test="${setor.valor == usuario.setor.id}">
+                                            <option value="${setor.valor}" selected="true">${setor.chave}</option>
+                                        </c:if>
+                                        <c:if test="${!(setor.valor == usuario.setor.id)}">
+                                            <option value="${setor.valor}">${setor.chave}</option>
+                                        </c:if>
+                                    </c:forEach>
+
+                                </select>
+                            </div>
+                        
+                        <div class="form-group">
                             <label for="senha-usuario">Senha</label>
                             <input class="form-control" required id="senha-usuario" name="usuario.senha" type="password">
                         </div>
