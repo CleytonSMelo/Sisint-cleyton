@@ -45,10 +45,5 @@ public class UsuarioJpaDao extends EntidadeJpaDao<Usuario> implements UsuarioDao
     public List<Usuario> listar() {
         return super.listar().stream().collect(Collectors.toList());
     }
-//    @Override
-//    public List<Usuario> listarTodos(){
-//    	Query query = this.manager.createQuery(" SELECT u.id, u.nome, u.login, u.email, u.telefone, s.nome FROM Usuario u join Setor s on u.setor_id = s.id  where u.deletado = false ");
-//		return query.getResultList();
-//    	
-//    }
+
 }

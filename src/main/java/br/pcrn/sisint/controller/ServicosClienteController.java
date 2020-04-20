@@ -135,16 +135,29 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
 //        List<Servico> servicos = this.servicoDao.listar();
 //        resultado.include("servicos", servicos);
 //    }
-//
-//    public void meusServicos() {
-//        List<Servico> servicos = this.servicoDao.listarMeusServicos(usuarioLogado.getUsuario().getId());
-//        resultado.include("servicos", servicos);
-//    }
-    @Path("/servicosAberto")
-    public void servicosAbertos() {
-        List<Servico> servicos = this.servicoDao.listarServicosEmAberto();
+// //lista seriços por usuario
+    public void meusServicos() {
+        List<Servico> servicos = this.servicoDao.listarMeusServicos(usuarioLogado.getUsuario().getId());
         resultado.include("servicos", servicos);
     }
+    
+    //listar serviços por setor
+    public void setorServicos() {
+      List<Servico> servicos = this.servicoDao.listarPorSetorTodos(usuarioLogado.getUsuario().getSetor().getId());
+      resultado.include("servicos", servicos);
+    }
+    
+//    @Path("/servicosAberto")
+//    public void servicosAbertos() {
+//        List<Servico> servicos = this.servicoDao.listarServicosEmAberto();
+//        resultado.include("servicos", servicos);
+//    }
+    
+    @Path("/servicosAberto")
+  public void servicosAbertos() {
+    	List<Servico> servicos = this.servicoDao.listarPorSetorEmAberto(usuarioLogado.getUsuario().getSetor().getId());
+        resultado.include("servicos", servicos);
+  }
 
     public void detalhes(Long id) {
         Servico servico = servicoDao.BuscarPorId(id);

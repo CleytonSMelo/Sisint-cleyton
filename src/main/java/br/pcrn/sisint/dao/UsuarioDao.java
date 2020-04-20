@@ -15,7 +15,6 @@ public interface UsuarioDao extends EntidadeDao<Usuario> {
 
     Optional<Usuario> buscarPorLogin(String login);
     List<Usuario> listarAptos();
-    //List<Usuario> listarTodos();
     
     @Override
     List<Usuario> listar();

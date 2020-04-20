@@ -35,23 +35,28 @@
             <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i> Últimas Tarefas
+                            <i class="fa fa-bell fa-fw"></i> Últimos Serviços Solicitados
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
                                 <c:forEach items="${todosServicos}" var="servico">
                                         <a href="${linkTo[ServicosClienteController].detalhes}?id=${servico.id}" class="list-group-item">
-                                            ${servico.titulo}
+                                             ${servico.titulo}
+                                                                                                                                                                          
                                             <span class="pull-right text-muted small date-column"><em>${servico.dataFechamento}</em>
                                             </span>
                                             <span class="pull-right text-muted small" style="padding-right: 15px;"><em>${servico.tecnico.nome}</em>
                                             </span>
+                                            
+<%--                                             <span class="text-center"><em>${servico.nomeSolicitante}</em> --%>
+<!--                                             </span> -->
+                                           
                                         </a>
                                 </c:forEach>
                             </div>
                             <!-- /.list-group -->
-                            <a href="${linkTo[TarefasController].lista}" class="btn btn-default btn-block">Ver Todas as Tarefas</a>
+                            <a href="${linkTo[ServicosClienteController].setorServicos}" class="btn btn-default btn-block">Ver Todos os Serviços da Unidade / Setor</a>
                         </div>
                         <!-- /.panel-body -->
                     </div>

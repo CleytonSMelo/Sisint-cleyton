@@ -131,7 +131,22 @@ public class UsuariosController extends ControladorSisInt<Usuario> {
         }
     }
 
-
+//methodo para ativar o usuario
+    @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
+    @Transacional
+    public void ativar(Long id) {
+        try {
+            Usuario usuario = usuarioDao.buscarPorId(id);
+            usuario.setDeletado(false);
+            usuarioDao.salvar(usuario);
+            resultado.include("mensagem", new SimpleMessage("success","mensagem.usuario.ativar.sucesso"));
+            resultado.redirectTo(this).lista();
+        } catch (Exception e) {
+            resultado.include("mensagem", new SimpleMessage("error", "mensagem.ususario.ativarr.error"));
+            resultado.redirectTo(this).lista();
+        }
+    }
+    
     private String criptografarSenha(String senha) {
         return Criptografia.criptografar(senha);
     }

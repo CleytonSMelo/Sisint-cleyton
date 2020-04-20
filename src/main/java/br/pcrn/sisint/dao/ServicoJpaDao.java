@@ -133,7 +133,34 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
         query.setParameter("id", id);
         return query.getResultList();
     }
-
+    // a parte abaixo foi add
+    //Lista os serviços por setor em aberto
+    @Override
+    public List<Servico> listarPorSetorEmAberto(Long id) {
+        Query query = manager.createQuery("select s from Servico s " +
+                                             "where (s.statusServico ='EM_ESPERA') AND s.deletado = false AND s.setor.id = :id");
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+  //Lista todos os serviços por setor 
+    @Override
+    public List<Servico> listarPorSetorTodos(Long id) {
+        Query query = manager.createQuery("select s from Servico s " +
+                                             "where (s.statusServico = 'EM_EXECUCAO' OR s.statusServico = 'EM_ESPERA' OR s.statusServico = 'CONCLUIDO') AND s.deletado = false AND s.setor.id = :id");
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+    
+  //Lista 10 ultimos  serviços por setor 
+    //SELECT s FROM Servico s ORDER BY s.dataFechamento DESC
+    @Override
+    public List<Servico> listarPorSetorUltimosAberto(Long id) {
+        Query query = manager.createQuery("select s from Servico s "+  
+                                             "where (s.statusServico = 'EM_EXECUCAO' OR s.statusServico = 'EM_ESPERA' OR s.statusServico = 'CONCLUIDO') AND s.deletado = false AND s.setor.id = :id "+" ORDER BY s.dataFechamento DESC");
+        query.setParameter("id", id).setMaxResults(9);
+        return query.getResultList();
+    }
+    
     @Override
     public List<Servico> listarServicosEmAberto() {
         Query query = manager.createQuery("select s from Servico s where s.deletado = false AND s.statusServico = :status");
@@ -238,6 +265,7 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
         return query.getResultList();
     }
 
+    //fazer teste com este
     @Override
     public List<Servico> filtrarMaisRecentesPorSetor(Long id) {
         Query query = manager.createQuery("SELECT s FROM Servico s WHERE s.setor.id = :id ORDER BY s.dataFechamento DESC").setParameter("id", id).setMaxResults(10);

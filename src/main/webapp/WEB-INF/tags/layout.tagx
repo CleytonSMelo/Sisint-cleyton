@@ -230,11 +230,13 @@
                                     <li>
                                         <a href="${linkTo[ServicosClienteController].form}">Novo Serviço</a>
                                     </li>
-<!--                                     <li> -->
-<!--                                         <a href="${linkTo[ServicosController].meusServicos}">Meus Serviços</a> -->
-<!--                                     </li> -->
+                                   
                                     <li>
                                         <a href="${linkTo[ServicosClienteController].servicosAbertos}">Ver Serviços Abertos</a>
+                                    </li>
+                                    
+                                     <li>
+                                        <a href="${linkTo[ServicosClienteController].setorServicos}">Todos Serviços</a>
                                     </li>
 <!--                                     <c:if test="${usuarioLogado.isAdmin()}"> -->
 <!--                                         <li> -->

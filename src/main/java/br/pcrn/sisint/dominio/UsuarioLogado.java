@@ -7,6 +7,8 @@ import javax.enterprise.context.SessionScoped;
 @SessionScoped
 public class UsuarioLogado extends Sessao {
     private Usuario usuario;
+    //setor
+    //private Setor setor;
 
     public void loga(Usuario usuario){
         this.usuario = usuario;
@@ -23,7 +25,15 @@ public class UsuarioLogado extends Sessao {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
+    //setor
+    public Usuario getSetor() {
+    	return usuario;
+    }
+    //setor
+    public void setSetor(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
     public void desloga(){
         this.usuario = null;
 //        destruir();

@@ -14,6 +14,7 @@ import br.pcrn.sisint.dao.TarefaDao;
 import br.pcrn.sisint.dominio.StatusManutencao;
 import br.pcrn.sisint.dominio.StatusServico;
 import br.pcrn.sisint.dominio.TipoUsuario;
+import br.pcrn.sisint.dominio.UsuarioLogado;
 import br.pcrn.sisint.negocio.DashboardNegocio;
 import com.google.gson.JsonElement;
 
@@ -25,7 +26,7 @@ import java.time.LocalDate;
 @Seguranca(tipoUsuario = TipoUsuario.CLIENTE)
 @Controller
 public class InicioClienteController extends Controlador {
-
+    
     private ServicoDao servicoDao;
     private TarefaDao tarefaDao;
     private ManutencaoDao manutencaoDao;
@@ -34,6 +35,9 @@ public class InicioClienteController extends Controlador {
 
     @Inject
     private Validator validator;
+    
+    @Inject
+    private UsuarioLogado usuarioLogado;
 
     protected InicioClienteController() {
         this(null, null, null, null, null, null);
@@ -75,7 +79,9 @@ public class InicioClienteController extends Controlador {
 		 * 
 		 * resultado.include("dezUltimasTarefas", tarefaDao.buscarDezUltimas());
 		 */
-    	resultado.include("todosServicos", servicoDao.buscarTodosServicos());
+    	//resultado.include("meusServicos", servicoDao.meusServicos());
+    	//carrega a lista de serviços do cliente
+    	resultado.include("todosServicos", servicoDao.listarPorSetorUltimosAberto(usuarioLogado.getUsuario().getSetor().getId()));
     }
    
 //    @Path("/info")

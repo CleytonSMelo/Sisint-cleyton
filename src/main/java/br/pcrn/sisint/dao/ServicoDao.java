@@ -6,6 +6,8 @@ import br.pcrn.sisint.dominio.StatusServico;
 import br.pcrn.sisint.dominio.Tarefa;
 
 import javax.ejb.Local;
+
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,6 +23,11 @@ public interface ServicoDao extends EntidadeDao<Servico> {
     List<Servico> listar();
 
     List<Servico> listarServicos();
+    //linha abaixo add
+    public List<Servico> listarPorSetorEmAberto(Long id);
+    public List<Servico> listarPorSetorTodos(Long id);
+    public List<Servico> listarPorSetorUltimosAberto(Long id);
+    //
     public List<Servico> listarMeusServicos(Long id);
     public List<Servico> listarServicosEmAberto();
     Long servicoPorSetor(Long id);
