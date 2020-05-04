@@ -80,7 +80,7 @@ public class UsuariosController extends ControladorSisInt<Usuario> {
     @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
     public void lista() {
     	
-    	List<Usuario> usuario = this.usuarioDao.listar();
+    	List<Usuario> usuario = this.usuarioDao.listar2();
         resultado.include("usuarios", usuario);
     	
         //resultado.include("usuarios", usuarioDao.listar());
@@ -142,7 +142,7 @@ public class UsuariosController extends ControladorSisInt<Usuario> {
             resultado.include("mensagem", new SimpleMessage("success","mensagem.usuario.ativar.sucesso"));
             resultado.redirectTo(this).lista();
         } catch (Exception e) {
-            resultado.include("mensagem", new SimpleMessage("error", "mensagem.ususario.ativarr.error"));
+            resultado.include("mensagem", new SimpleMessage("error", "mensagem.ususario.ativar.error"));
             resultado.redirectTo(this).lista();
         }
     }

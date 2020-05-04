@@ -35,15 +35,26 @@ public class UsuarioJpaDao extends EntidadeJpaDao<Usuario> implements UsuarioDao
             return query.setMaxResults(1).getResultList().stream().findFirst();
     }
 
+//    @Override
+//    public List<Usuario> listarAptos() {
+//        Query query = this.manager.createQuery("SELECT u FROM Usuario u WHERE u.id <> 1");
+//        return query.getResultList();
+//    }
+    
     @Override
     public List<Usuario> listarAptos() {
         Query query = this.manager.createQuery("SELECT u FROM Usuario u WHERE u.id <> 1 AND u.deletado = false");
         return query.getResultList();
     }
-    
     @Override
     public List<Usuario> listar() {
         return super.listar().stream().collect(Collectors.toList());
     }
+    
+    @Override
+    public List<Usuario> listar2() {
+        return super.listar2().stream().collect(Collectors.toList());
+    }
+    
 
 }

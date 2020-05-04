@@ -18,4 +18,11 @@ public interface UsuarioDao extends EntidadeDao<Usuario> {
     
     @Override
     List<Usuario> listar();
+    
+    @Override
+    List<Usuario> listar2();
+    
+    
+    
+    
 }

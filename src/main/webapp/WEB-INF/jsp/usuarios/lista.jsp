@@ -9,10 +9,36 @@
     <jsp:attribute name="cabecalho">
     </jsp:attribute>
     <jsp:attribute name="rodape">
+    
+    <style type="text/css">
+        .remover {  
+ /*         pointer-events: none; */ 
+         cursor: default;  
+        color: red; 
+        
+        } 
+        
+         .adicionar {  
+ /*         pointer-events: none; */ 
+         cursor: default;  
+         color: green; 
+         } 
+        
+        .ocutar{ 
+          display: none ; 
+         } 
+
+    </style>
+    
+      
+    
         <script src="${ctx}/resources/plugins/dataTables/datatables.js"><c:out value=""/></script>
         <script src="${ctx}/resources/plugins/dataTables/Buttons-1.4.2/js/buttons.html5.js"><c:out value=""/></script>
         <script src="${ctx}/resources/js/usuarios/usuario.js"></script>
-        <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>
+        <script src="${ctx}/resources/js/usuarios/usuarios2.js"></script>       
+        <script src="${ctx}/resources/js/usuarios/verificar.js"></script>
+<%--         <script src="${ctx}/resources/js/usuarios/desabilitarlink.js"></script> --%>
+        <script src="${ctx}/resources/plugins/moment/date-time-moment.js"></script>     
         <script>
             $(document).ready(function () {
                 $.fn.dataTable.moment('DD/MM/YYYY');
@@ -44,11 +70,72 @@
                             }
                         }
                 } );
+                	
+//                 var deletado = $("#del").val()
+//                // while(deletado.lenght)
+          	   
+//                 //alert(deletado);
+//                 if(deletado.val == 'true'){
+             	   
+//              	  // $("#desati").css("display","none");
+//                 }else if(deletado == 'false'){
+//              	   alert(deletado)
+//                 }
             });
+            
         </script>
+               <script>
+       
+       
+  		  
+//   		  var table = document.getElementById('tabela-servico');
+  		  
+//   		  //var table = document.getElementById("#tabela-servico");
+//   		  for ( var i = 0; i < table.rows.length; i++ ) {
+//   		       //iterate through cells
+//   		       //cells would be accessed using the "cell" variable assigned in the for loop
+  			  
+  			  
+//   			 var texto =  $('tabela-servico tr:nth-child('+i+') td:nth-child(7)').text();
+					
+//         		var result = (texto);
+        						
+//         		if (result=="true"){
+//         			console.lgo("deletado");
+//         			//$("#idTr2").css("background","#FF0000");
+//         		}else if(result=="false"){
+//         			console.log("não deletado");
+//         			//$("#idTr2").css("background","#00FF00");
+//         		//}else if(result=="In Process"){
+//         			//$("#idTr2").css("background","#0000FF");
+//         		//}else if(result=="New"){
+//         			//$("#idTr2").css("background","#00FFFF");
+//         		}else{
+//         			console.log("nenhuma das opções");
+//         			//$("#idTr2").css("background","#ccc");
+//         		}
+  			  
+  			  
+  			  
+//   		  }
+  		  
+  		  
+  		  
+  		
+  	    	
+  		
+
+
+
+//console.log(tableArr);
+
+        </script>  
+     
+        
     </jsp:attribute>
 
     <jsp:body>
+      
         <div class="panel painel-sisint">
             <div class="row">
                 <div class="col-lg-12">
@@ -60,7 +147,7 @@
                 <a class="btn btn-info" style="margin-bottom: 16px;" href="${linkTo[UsuariosController].form}">Cadastrar</a>
                 <div class="tabela-servicos">
                     <table id="tabela-servico" class="table table-bordered tabela">
-                        <thead>
+                        <thead>                      
                         <tr>
                             <th>ID</th>
                             <th>Nome</th>
@@ -68,12 +155,14 @@
                             <th>Email</th>
                             <th>Telefone</th>
                             <th>Tipo</th> 
-                            <th>Setor</th>                          
+                            <th>Setor</th> 
+                            <th>Deletado</th>                        
                             <th>Ações</th>                          
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody>                      
                         <c:forEach items="${usuarios}" var="usuario">
+                        
                             <tr>
                                 <td>${usuario.id}</td>
                                 <td>${usuario.nome}</td>
@@ -81,13 +170,26 @@
                                 <td>${usuario.email}</td>
                                 <td>${usuario.telefone}</td>
                                 <td>${usuario.tipoUsuario.valor}</td> 
-                                <td>${usuario.setor.nome}</td>                             
+                                <td>${usuario.setor.nome}</td>                                   
+                                <td id="del">${usuario.deletado}</td>                                       
                                 <td><a title="Detalhes" href="#"><i class="fa fa-eye fa-lg" aria-hidden="false"></i></a>
                                     <a title="Editar" href="${linkTo[UsuariosController].editar}?id=${usuario.id}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
-                                    <c:if test="${usuarioLogado.isAdmin()}">
-                                        <a title="Desativar" class="desativar-usuario" id-usuario="${usuario.id}"
-                                           href="#modalDesativar" data-toggle="modal"><i class="fa fa-times fa-lg"></i></a></td>
+                                    <c:if test="${usuarioLogado.isAdmin()}"> 
+                                    
+       
+                                  
+                                    	  <a name="ati" title="Ativar" class="ativar-usuario adicionar" id-usuario="${usuario.id}"
+                                              href="#modalAtivar" data-toggle="modal"><i class="fa fa-check fa-lg" aria-hidden="true"></i></a>
+                                                                    
+                                    	  
+                                    	  <a name="desati" title="Desativar" class="desativar-usuario remover" id-usuario="${usuario.id}"
+                                              href="#modalDesativar" data-toggle="modal"><i class="fa fa-times fa-lg" aria-hidden="true"></i></a>
+                                             
+                                          
                                     </c:if>
+                                    
+                                      
+                                 </td>     
                             </tr>
                         </c:forEach>
 
@@ -114,6 +216,28 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
+            
+            <!-- MODAL ATIVAR USUARIO -->
+            <div class="modal fade" id="modalAtivar" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">               
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Ativar Usuário</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Deseja realmente ativar o usuário?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <a id="btnAtivar" class="btn btn-success" href="${linkTo[UsuariosController].ativar}?id=">Ativar</a>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         </div>
+        
+        
+ 
     </jsp:body>
 </tags:layout>
