@@ -36,9 +36,17 @@ public class SetorNegocio {
         return setorDao.buscarPorId(id);
     }
 
+    // Desativa setor
     public void remover(Long id) {
         Setor setor = setorDao.buscarPorId(id);
         setor.setDeletado(true);
+        this.setorDao.salvar(setor);
+    }
+    
+    //Ativar setor
+    public void ativar(Long id) {
+        Setor setor = setorDao.buscarPorId(id);
+        setor.setDeletado(false);
         this.setorDao.salvar(setor);
     }
 

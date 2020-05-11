@@ -50,7 +50,13 @@
         </head>
 
         <body>
+            <c:if test="${usuarioLogado.isAdmin() || usuarioLogado.isTecnico()}">
             <input id="ctx" type="hidden" value="${linkTo[ServicosController].salvar}"/>
+            </c:if>
+            
+            <c:if test="${usuarioLogado.isCliente()}">
+            <input id="ctx" type="hidden" value="${linkTo[ServicosClienteController].salvar}"/>
+            </c:if>
             <div id="wrapper">
 
                 <!-- Navigation -->

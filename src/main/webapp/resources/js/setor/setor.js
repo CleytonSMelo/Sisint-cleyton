@@ -5,6 +5,7 @@ $(document).ready( function () {
         console.log(valorUrl);
         $('#btn-remover').attr("href", valorUrl);
     });
+    
 
     $('.table').DataTable( {
         pageLength:25,

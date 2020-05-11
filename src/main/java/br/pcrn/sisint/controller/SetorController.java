@@ -11,6 +11,7 @@ import br.pcrn.sisint.dao.TarefaDao;
 import br.pcrn.sisint.dominio.Setor;
 import br.pcrn.sisint.dominio.Tarefa;
 import br.pcrn.sisint.dominio.TipoUsuario;
+import br.pcrn.sisint.dominio.Usuario;
 import br.pcrn.sisint.negocio.SetorNegocio;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -39,8 +40,14 @@ public class SetorController extends ControladorSisInt<Setor> {
         this.setorNegocio = setorNegocio;
     }
 
+    
+    //listar setor modificado para lista 2 do setorDao
     public void lista(){
-        resultado.include("setores", setorDao.listar());
+    	
+    	List<Setor> setor = this.setorDao.listar2();
+    	resultado.include("setores", setor);
+    	
+       // resultado.include("setores", setorDao.listar());
     }
 
     public void form(){}
@@ -57,11 +64,19 @@ public class SetorController extends ControladorSisInt<Setor> {
         resultado.include("setor",setor);
         resultado.of(this).form();
     }
-
+    // desabilita o setor
     @Transacional
     @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
     public void remover(Long id) {
         setorNegocio.remover(id);
+        resultado.redirectTo(this).lista();
+    }
+    
+    //Ativa o setor
+    @Transacional
+    @Seguranca(tipoUsuario = TipoUsuario.ADMINISTRADOR)
+    public void ativar(Long id) {
+        setorNegocio.ativar(id);
         resultado.redirectTo(this).lista();
     }
 

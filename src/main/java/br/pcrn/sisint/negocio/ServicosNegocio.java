@@ -62,6 +62,14 @@ public class ServicosNegocio {
                 setor -> new OpcaoSelect(setor.getNome(), setor.getId()))
                 .collect(Collectors.toList());
     }
+    
+    public List<OpcaoSelect> geraListaOpcoesSetorCli() {
+        List<Setor> todos = this.setorDao.todos2();
+        todos.sort((a,b) ->a.getNome().compareTo(b.getNome()));
+        return todos.stream().map(
+                setor -> new OpcaoSelect(setor.getNome(), setor.getId()))
+                .collect(Collectors.toList());
+    }
 
     public String gerarCodigoServico () {
         Long qt = servicoDao.contarTotalServicos();

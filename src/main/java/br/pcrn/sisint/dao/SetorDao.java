@@ -8,7 +8,15 @@ public interface SetorDao extends EntidadeDao<Setor> {
 
     @Override
     List<Setor> listar();
+    
+    
+    //referencia o listar 2 no setorjpaDao
+    @Override
+    List<Setor> listar2();
 
     @Override
     List<Setor> todos();
+    
+    @Override
+    List<Setor> todos2();
 }

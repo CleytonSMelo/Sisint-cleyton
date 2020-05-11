@@ -62,23 +62,79 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
         this.servicosNegocio = servicosNegocio;
         this.setorDao = setorDao;
     }
-    @Path("/cadastrar")
+   // @Path("/servicosCliente")
     public void form() {
         resultado.include("usuarios", servicosNegocio.geraListaOpcoesUsuarios());
-        resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+        resultado.include("setores", servicosNegocio.geraListaOpcoesSetorCli());
         resultado.include("status", OpcaoSelect.toListaOpcoes(StatusServico.values()));
         resultado.include("statusTarefa", OpcaoSelect.toListaOpcoes(StatusTarefa.values()));
         resultado.include("prioridades", OpcaoSelect.toListaOpcoes(Prioridade.values()));
     }
 
 
-    @Post("/servicosExterno")
+//    @Post("/servicosCliente")
+//    @Transacional
+//    public void salvar(Servico servico) {
+//        try {
+//            //Atribui data de abertura de chamado e caso não haja um técnico reponsável, torna nula a variável de usuário
+//            if (servico.getId() == null) {
+//                servico.setDataAbertura(LocalDate.now());
+//                if (servico.getTecnico().getId() == null) {
+//                    servico.setTecnico(null);
+//                }
+//            }
+//            // Atribui Status do serviço
+//            if (servico.getTecnico() == null) {
+//                servico.setStatusServico(StatusServico.EM_ESPERA);
+//            } else {
+//                servico.setStatusServico(StatusServico.EM_EXECUCAO);
+//            }
+//            //Gera o código de serviço
+//            if (servico.getCodigoServico() == null) {
+//                servico.setCodigoServico(servicosNegocio.gerarCodigoServico());
+//                if (servico.getTarefas() != null) {
+//                    if (!servico.getTarefas().isEmpty()) {
+//                        servicosNegocio.gerarCodigoTarefas(servico.getCodigoServico(), servico.getTarefas());
+//                    }
+//                }
+//            } else {
+//                if (servico.getTarefas() != null) {
+//                    servicosNegocio.gerarCodigoTarefas(servico.getCodigoServico(), servico.getTarefas());
+//                }
+//            }
+//            //Gera Log do serviço
+//            servicosNegocio.gerarLog(servico);
+//            if (servico.getTarefas() != null) {
+//                if (servicosNegocio.verificarConclusaoServico(servico.getTarefas())) {
+//                    servico.setStatusServico(StatusServico.CONCLUIDO);
+//                    LogServico logServico = new LogServico();
+//                    logServico.setLog("Servico " + servico.getCodigoServico() + " foi concluído.");
+//                    logServico.setServico(servico);
+//                    logServico.setDataAlteracao(LocalDateTime.now());
+//                    logServico.setUsuario(usuarioLogado.getUsuario());
+//                    servico.getLogServicos().add(logServico);
+//                }
+//            }
+//
+//            this.servicoDao.salvar(servico);
+//            resultado.include("mensagem", new SimpleMessage("success", "mensagem.salvar.sucesso"));
+//            resultado.redirectTo(this).editar(servico.getId());
+//        } catch (Exception e) {
+//            resultado.include("mensagem", new SimpleMessage("error", "mensagem.salvar.error"));
+//            resultado.redirectTo(this).editar(servico.getId());
+//        }
+//    }
+
+    
+    @Post("/servicosCliente")
     @Transacional
     public void salvar(Servico servico) {
         try {
             //Atribui data de abertura de chamado e caso não haja um técnico reponsável, torna nula a variável de usuário
             if (servico.getId() == null) {
                 servico.setDataAbertura(LocalDate.now());
+                //servico.setPrioridade(Prioridade.AGUARDANDO_ANALISE);
+                //servico.setDataFechamento(LocalDate.now());
                 if (servico.getTecnico().getId() == null) {
                     servico.setTecnico(null);
                 }
@@ -115,6 +171,7 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
                     servico.getLogServicos().add(logServico);
                 }
             }
+           
 
             this.servicoDao.salvar(servico);
             resultado.include("mensagem", new SimpleMessage("success", "mensagem.salvar.sucesso"));
@@ -124,7 +181,6 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
             resultado.redirectTo(this).editar(servico.getId());
         }
     }
-
 //    public void logServico(Long id) {
 //        Servico servico = servicoDao.BuscarPorId(id);
 //        resultado.include("listaLogs", servico.getLogServicos());
@@ -283,14 +339,14 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
 //        servicoDao.salvar(servico);
 //        resultado.redirectTo(ServicosClienteController.class).meusServicos();
 //    }
+    
+    public void buscarSetorJson(Long id) {
+        Setor setor = setorDao.buscarPorId(id);
+        JsonObject telJson = new JsonObject();
+        telJson.addProperty("telJson", setor.getTelefone());
 
-//    public void buscarSetorJson(Long id) {
-//        Setor setor = setorDao.buscarPorId(id);
-//        JsonObject telJson = new JsonObject();
-//        telJson.addProperty("telJson", setor.getTelefone());
-//
-//        resultado.use(Results.json()).withoutRoot().from(telJson).recursive().serialize();
-//    }
+        resultado.use(Results.json()).withoutRoot().from(telJson).recursive().serialize();
+    }
 //
 //    public void formRelatorio() {
 //        resultado.include("setores", setorNegocio.gerarListaOpcoesSetor());

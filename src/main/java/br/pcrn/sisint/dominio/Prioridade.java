@@ -3,7 +3,7 @@ package br.pcrn.sisint.dominio;
 import br.pcrn.sisint.conversor.ConvertivelOpcaoSelect;
 
 public enum Prioridade implements ConvertivelOpcaoSelect{
-    ALTA("Alta"), MEDIA("Média"), BAIXA("Baixa");
+    ALTA("Alta"), MEDIA("Média"), BAIXA("Baixa"), AGUARDANDO_ANALISE("Em Análise");
 
     private String chave;
 

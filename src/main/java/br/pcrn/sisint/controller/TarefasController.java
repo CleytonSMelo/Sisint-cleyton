@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@Seguranca(tipoUsuario = TipoUsuario.TECNICO)
+//@Seguranca(tipoUsuario = TipoUsuario.TECNICO)
 public class TarefasController extends ControladorSisInt<Tarefa> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TarefasController.class);

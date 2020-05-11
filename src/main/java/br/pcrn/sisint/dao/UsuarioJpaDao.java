@@ -27,10 +27,11 @@ public class UsuarioJpaDao extends EntidadeJpaDao<Usuario> implements UsuarioDao
     public UsuarioJpaDao(EntityManager entityManager) {
         super(entityManager, Usuario.class);
     }
-
+    // faz o controle o login, mas com consulta por setor, se estiver deletado o mesmo não efetuara o login
     @Override
     public Optional<Usuario> buscarPorLogin(String login) {
-            Query query = this.manager.createQuery("SELECT p from Usuario p where p.login = :login AND p.deletado = false");
+           // Query query = this.manager.createQuery("SELECT p from Usuario p where p.login = :login AND p.deletado = false");
+            Query query = this.manager.createQuery("SELECT p from Usuario p "+"join Setor s "+"on p.setor.id = s.id"+" where p.login = :login AND p.deletado = false AND s.deletado = false");
             query.setParameter("login",login);
             return query.setMaxResults(1).getResultList().stream().findFirst();
     }
@@ -41,11 +42,18 @@ public class UsuarioJpaDao extends EntidadeJpaDao<Usuario> implements UsuarioDao
 //        return query.getResultList();
 //    }
     
+//    @Override
+//    public List<Usuario> listarAptos() {
+//        Query query = this.manager.createQuery("SELECT u FROM Usuario u WHERE u.id <> 1 AND u.deletado = false"); 
+//        return query.getResultList();
+//    }
+    
     @Override
     public List<Usuario> listarAptos() {
-        Query query = this.manager.createQuery("SELECT u FROM Usuario u WHERE u.id <> 1 AND u.deletado = false");
+        Query query = this.manager.createQuery("SELECT u FROM Usuario u WHERE u.tipoUsuario='ADMINISTRADOR' or u.tipoUsuario='TECNICO' AND u.deletado = false ORDER BY u.id"); 
         return query.getResultList();
     }
+    
     @Override
     public List<Usuario> listar() {
         return super.listar().stream().collect(Collectors.toList());

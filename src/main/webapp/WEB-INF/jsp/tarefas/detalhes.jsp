@@ -86,11 +86,18 @@
                         <br>
                     </div>
                 </div>
+               
                 <div class="panel-heading">
-                    <h3 align="center">Notas <a title="Adicionar Nota" class="add_nota" id-tarefa="${tarefa.id}"
+                    <h3 align="center">Notas 
+                      <c:if test="${usuarioLogado.isAdmin() || usuarioLogado.isTecnico()}">
+                         <a title="Adicionar Nota" class="add_nota" id-tarefa="${tarefa.id}"
                                                   data-toggle="modal" href="#modalNota" style="margin-left: 10px;">
-                        <i class="fa fa-plus" aria-hidden="true"></i></a></h3>
+                             <i class="fa fa-plus" aria-hidden="true"></i>
+                         </a> 
+                    </c:if>
+                  </h3>
                 </div>
+                
                 <div class="row">
                     <c:forEach items="${tarefa.notas}" var="nota">
                         <input class="usuarioNota" type="hidden" value="${nota.tecnico.nome}">

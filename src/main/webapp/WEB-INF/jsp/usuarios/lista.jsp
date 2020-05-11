@@ -70,66 +70,11 @@
                             }
                         }
                 } );
-                	
-//                 var deletado = $("#del").val()
-//                // while(deletado.lenght)
-          	   
-//                 //alert(deletado);
-//                 if(deletado.val == 'true'){
-             	   
-//              	  // $("#desati").css("display","none");
-//                 }else if(deletado == 'false'){
-//              	   alert(deletado)
-//                 }
+                	                 
             });
             
         </script>
-               <script>
-       
-       
-  		  
-//   		  var table = document.getElementById('tabela-servico');
-  		  
-//   		  //var table = document.getElementById("#tabela-servico");
-//   		  for ( var i = 0; i < table.rows.length; i++ ) {
-//   		       //iterate through cells
-//   		       //cells would be accessed using the "cell" variable assigned in the for loop
-  			  
-  			  
-//   			 var texto =  $('tabela-servico tr:nth-child('+i+') td:nth-child(7)').text();
-					
-//         		var result = (texto);
-        						
-//         		if (result=="true"){
-//         			console.lgo("deletado");
-//         			//$("#idTr2").css("background","#FF0000");
-//         		}else if(result=="false"){
-//         			console.log("não deletado");
-//         			//$("#idTr2").css("background","#00FF00");
-//         		//}else if(result=="In Process"){
-//         			//$("#idTr2").css("background","#0000FF");
-//         		//}else if(result=="New"){
-//         			//$("#idTr2").css("background","#00FFFF");
-//         		}else{
-//         			console.log("nenhuma das opções");
-//         			//$("#idTr2").css("background","#ccc");
-//         		}
-  			  
-  			  
-  			  
-//   		  }
-  		  
-  		  
-  		  
-  		
-  	    	
-  		
-
-
-
-//console.log(tableArr);
-
-        </script>  
+               
      
         
     </jsp:attribute>

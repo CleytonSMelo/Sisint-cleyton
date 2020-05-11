@@ -31,12 +31,12 @@
     </jsp:attribute>
 
     <jsp:attribute name="rodape">
-        <script src="${ctx}/resources/js/servicos/form.js"></script>
-        <script src="${ctx}/resources/js/servicos/servico.js"></script>
-        <script src="${ctx}/resources/js/servicos/tarefas.js"></script>
+        <script src="${ctx}/resources/js/servicosCliente/form.js"></script>
+        <script src="${ctx}/resources/js/servicosCliente/servico.js"></script>
+        <script src="${ctx}/resources/js/servicosCliente/tarefas.js"></script>
         <script src="${ctx}/resources/js/tarefas/tarefa.js"></script>
-        <script src="${ctx}/resources/js/servicos/btnTarefa.js"></script>
-        <%--<script src="${ctx}/resources/js/servicos/adicionarTarefa.js"></script>--%>
+        <script src="${ctx}/resources/js/servicosCliente/btnTarefa.js"></script>
+<%--         <script src="${ctx}/resources/js/servicosCliente/adicionarTarefa.js"></script> --%>
     </jsp:attribute>
 
     <jsp:body>
@@ -44,7 +44,7 @@
             <div class="col-lg-12">
                 <h1 class="page-header">Cadastro de Serviço</h1>
             </div>
-            <!-- /.col-lg-12 -->
+<!--             /.col-lg-12 -->
         </div>
         <div class="panel painel-cadastro-sisint">
             <form id="form-servico-tarefa" action="${linkTo[ServicosClienteController].salvar}" method="post">
@@ -106,7 +106,7 @@
                                        required="true"
                                        value="${servico.dataFechamento}"
                                        placeholder="Data de finalização" readonly="readonly" name="servico.dataFechamento"/>
-                        </div>
+                            </div>
 
                             <div class="form-group col-md-3">
                                 <label for="prioridade-servico">Prioridade</label>
@@ -158,7 +158,7 @@
                         <div class="col-lg-12">
                             <h3 class="page-body">Tarefas</h3>
                         </div>
-                        <!-- /.col-lg-12 -->
+<!--                         /.col-lg-12 -->
                     </div>
                     <div id="tarefas-cadastradas" class="list-group" style="margin-top: 16px;">
 
@@ -166,7 +166,7 @@
 
                     <!-- BOTAO PARA MODAL SERVICO -->
                     <div class="panel" align="right">
-                        <button type="button" id="btnServico" class="btn btn-primary"
+                        <button type="button" id="btnServico" class="btn btn-primary" 
                                 data-toggle="modal" data-target="#modalServico" onclick="criarAviso()">Salvar</button>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                                 <h4 class="modal-title">Salvar Serviço</h4>
                             </div>
                             <div id="corpoModalServico" class="modal-body">
-
+                                 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -193,11 +193,11 @@
 
             </form>
 
-            <!-- MODAL TAREFA -->
+<!--             MODAL TAREFA -->
             <div class="modal fade" id="myModal" role="dialog">
                 <div class="modal-dialog">
                     <input type="hidden" name="tarefa.id" value="${tarefa.id}"/>
-                    <!-- Modal content-->
+                    Modal content
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -260,11 +260,11 @@
                                         </select>
                                     </div>
                                 </div>
-                                <%--<label>Possui pendência:--%>
-                                    <%--<div style="margin-left: 16px; float: right;">--%>
-                                        <%--<input type="checkbox" name="tarefa.pendente" value="${tarefa.pendente}"/>--%>
-                                    <%--</div>--%>
-                                <%--</label>--%>
+                                <label>Possui pendência:
+                                    <div style="margin-left: 16px; float: right;">
+                                        <input type="checkbox" name="tarefa.pendente" value="${tarefa.pendente}"/>
+                                    </div>
+                                </label>
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="descricao-tarefa">Descrição:</label>
                                     <div class="col-md-10">
@@ -288,7 +288,7 @@
                 </div>
             </div>
 
-            <!-- MODAL REMOCAO DE TAREFA -->
+<!--             MODAL REMOCAO DE TAREFA -->
             <div class="modal fade" id="modalRemTarefa" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -303,9 +303,9 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <a id="btnRemTarefa" class="btn btn-danger" href="${linkTo[TarefasController].remover}?id=">Remover</a>
                         </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
+                   </div> <!--/.modal-content --> 
+                </div><!--/.modal-dialog -->
+            </div><!--/.modal -->
 
         </div>
     </jsp:body>

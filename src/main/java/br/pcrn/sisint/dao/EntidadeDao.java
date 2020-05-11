@@ -13,4 +13,7 @@ public interface EntidadeDao<T extends Entidade> {
     Collection<T> listar();
     Collection<T> listar2();
     Collection<T> todos();
+    
+    //Mostrar setor para clientes
+    Collection<T> todos2();
 }
