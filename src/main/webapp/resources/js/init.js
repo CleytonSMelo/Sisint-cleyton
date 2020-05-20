@@ -29,6 +29,8 @@ $(document).ready(function () {
             $(this).addClass('label label-warning');
         } else if(descricao == 'Alta') {
             $(this).addClass('label label-danger');
+        } else if (descricao == 'Em Análise') {
+        	$(this).addClass('label label-default');
         }
     });
 

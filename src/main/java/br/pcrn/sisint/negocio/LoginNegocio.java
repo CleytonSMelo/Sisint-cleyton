@@ -26,7 +26,7 @@ public class LoginNegocio {
 
     public Usuario validarUsuario(Usuario usuario) {
         if(usuario != null) {
-            Optional<Usuario> usuarioBanco = usuarioDao.buscarPorLogin(usuario.getLogin());
+            Optional<Usuario> usuarioBanco = usuarioDao.buscarPorLogin(usuario.getCpf());
             if(usuarioBanco.isPresent()) {
                 if(compararSenha(usuario.getSenha(), usuarioBanco.get().getSenha())){
                     return usuarioBanco.get();

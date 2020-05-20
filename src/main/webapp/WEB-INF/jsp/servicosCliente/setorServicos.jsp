@@ -100,8 +100,9 @@
                                         <a title="Log do serviço" href="${linkTo[ServicosClienteController].logServico}?id=${servico.id}">
                                             <i class="fa fa-list-ul fa-lg" aria-hidden="true"></i></a>
                                     </c:if>
-                                    <a title="Remover" class="remover-servico" id-servico="${servico.id}" data-toggle="modal" href="#modalRemover">
-                                        <i class="fa fa-trash fa-lg"></i></a></td>
+<%--                                     <a title="Remover" class="remover-servico" id-servico="${servico.id}" data-toggle="modal" href="#modalRemover"> --%>
+<!--                                         <i class="fa fa-trash fa-lg"></i></a> -->
+                                        </td>
                             </tr>
                         </c:forEach>
 
@@ -110,27 +111,27 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="modalRemover" role="dialog">
-            <div class="modal-dialog">
-                <input type="hidden" name="tarefa.id" value="${servico.id}"/>
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title primary">Remover Serviço</h4>
-                    </div>
-                    <div class="modal-body">
-                        <h5> Deseja remover o serviço?</h5>
-                    </div>
-                    <div id="btns-modal" class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <a id="btnRemoverServico" href="${linkTo[ServicosController].remover}?id=" class="btn btn-danger">Remover</a>
-                        <%--<a id="btnSalvarTarefa" href="${linkTo[ServicosController].assumirServico}?id=" class="btn btn-primary">--%>
-                            <%--Salvar--%>
-                        <%--</a>--%>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--         <div class="modal fade" id="modalRemover" role="dialog"> -->
+<!--             <div class="modal-dialog"> -->
+<%--                 <input type="hidden" name="tarefa.id" value="${servico.id}"/> --%>
+<!--                 Modal content -->
+<!--                 <div class="modal-content"> -->
+<!--                     <div class="modal-header"> -->
+<!--                         <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+<!--                         <h4 class="modal-title primary">Remover Serviço</h4> -->
+<!--                     </div> -->
+<!--                     <div class="modal-body"> -->
+<!--                         <h5> Deseja remover o serviço?</h5> -->
+<!--                     </div> -->
+<!--                     <div id="btns-modal" class="modal-footer"> -->
+<!--                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button> -->
+<%--                         <a id="btnRemoverServico" href="${linkTo[ServicosController].remover}?id=" class="btn btn-danger">Remover</a> --%>
+<%--                         <a id="btnSalvarTarefa" href="${linkTo[ServicosController].assumirServico}?id=" class="btn btn-primary"> --%>
+<%--                             Salvar --%>
+<%--                         </a> --%>
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
     </jsp:body>
 </tags:layout>

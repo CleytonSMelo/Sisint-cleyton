@@ -16,8 +16,8 @@ public class Usuario extends Entidade{
 
     private String nome;
 
-    @NotNull
-    private String login;
+//    @NotNull
+//    private String login;
 
     private String email;
 
@@ -37,6 +37,9 @@ public class Usuario extends Entidade{
     private boolean deletado;
 
     private String matricula;
+    
+    @NotNull
+    private String cpf;
 
     @Transient
     private String primeiroNome;
@@ -78,13 +81,13 @@ public class Usuario extends Entidade{
         this.tipoUsuario = tipoUsuario;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
+//    public String getLogin() {
+//        return login;
+//    }
+//
+//    public void setLogin(String login) {
+//        this.login = login;
+//    }
 
     public String getEmail() {
         return email;
@@ -150,6 +153,14 @@ public class Usuario extends Entidade{
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+    
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
     
     public Setor getSetor() {

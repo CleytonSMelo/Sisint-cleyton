@@ -44,16 +44,17 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
     @Inject
     private SetorNegocio setorNegocio;
 
+    private Setor setor;
     /**
      * @deprecated CDI eyes only
      */
     protected ServicosClienteController() {
-        this(null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null);
     }
 
     @Inject
     public ServicosClienteController(Result resultado, EntidadeDao<Servico> dao, ServicoDao servicoDao, Validator validador, UsuarioDao usuarioDao,
-                              ServicosNegocio servicosNegocio, SetorDao setorDao) {
+                              ServicosNegocio servicosNegocio, SetorDao setorDao, Setor setor) {
         super(resultado);
         this.dao = dao;
         this.servicoDao = servicoDao;
@@ -61,14 +62,18 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
         this.usuarioDao = usuarioDao;
         this.servicosNegocio = servicosNegocio;
         this.setorDao = setorDao;
+        this.setor = setor;
     }
    // @Path("/servicosCliente")
     public void form() {
         resultado.include("usuarios", servicosNegocio.geraListaOpcoesUsuarios());
-        resultado.include("setores", servicosNegocio.geraListaOpcoesSetorCli());
+        //resultado.include("setores", servicosNegocio.geraListaOpcoesSetorCli());
+        resultado.include("setores", setorDao.SetorServicos(usuarioLogado.getUsuario().getSetor().getId()));
         resultado.include("status", OpcaoSelect.toListaOpcoes(StatusServico.values()));
         resultado.include("statusTarefa", OpcaoSelect.toListaOpcoes(StatusTarefa.values()));
         resultado.include("prioridades", OpcaoSelect.toListaOpcoes(Prioridade.values()));
+        
+        resultado.include("verificar", servicoDao.listarPorSetorEmAberto(usuarioLogado.getUsuario().getSetor().getId()));
     }
 
 
@@ -125,62 +130,90 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
 //        }
 //    }
 
+  @Post("/servicosCliente")
+  @Transacional
+  public void salvar(Servico servico) {
+	  
+  try {
+	  if (servico.getId() == null) {
+          servico.setDataAbertura(LocalDate.now());
+          //servico.setTecnico(null);       
+          servico.setDataFechamento(LocalDate.now());
+          servico.setStatusServico(StatusServico.EM_ESPERA);  
+          servico.setCodigoServico(servicosNegocio.gerarCodigoServico());
+          servico.setPrioridade(Prioridade.AGUARDANDO_ANALISE);
+          servico.setSetor(servico.getSetor());
+          servico.setTelefoneRetorno(servico.getTelefoneRetorno());
+          servicosNegocio.gerarLog(servico);
+          this.servicoDao.salvar(servico);
+          
+      }
+	  
+	  if (servico.getCodigoServico() != null) {		  
+		  servico.setDataFechamento(servico.getDataFechamento());
+    	  servico.setStatusServico(servico.getStatusServico());
+    	  servico.setDataFechamento(servico.getDataFechamento());
+    	  servico.setPrioridade(servico.getPrioridade());
+    	  servico.setSetor(servico.getSetor());
+          servico.setTelefoneRetorno(servico.getTelefoneRetorno());
+          this.servicoDao.salvar(servico);
+      }
+	  
+	 
+	  
+	  
+      
+//          //Atribui data de abertura de chamado e caso não haja um técnico reponsável, torna nula a variável de usuário
+//          if (servico.getId() == null) {
+//              servico.setDataAbertura(LocalDate.now());
+//              if (servico.getTecnico().getId() == null) {
+//                  servico.setTecnico(null);
+//              }
+//          }
+//          // Atribui Status do serviço
+//          if (servico.getTecnico() == null) {
+//              servico.setStatusServico(StatusServico.EM_ESPERA);
+//          } else {
+//              servico.setStatusServico(StatusServico.EM_EXECUCAO);
+//          }
+//          //Gera o código de serviço
+//          if (servico.getCodigoServico() == null) {
+//              servico.setCodigoServico(servicosNegocio.gerarCodigoServico());
+//              if (servico.getTarefas() != null) {
+//                  if (!servico.getTarefas().isEmpty()) {
+//                      servicosNegocio.gerarCodigoTarefas(servico.getCodigoServico(), servico.getTarefas());
+//                  }
+//              }
+//          } else {
+//              if (servico.getTarefas() != null) {
+//                  servicosNegocio.gerarCodigoTarefas(servico.getCodigoServico(), servico.getTarefas());
+//              }
+//          }
+//          //Gera Log do serviço
+//          servicosNegocio.gerarLog(servico);
+//          if (servico.getTarefas() != null) {
+//              if (servicosNegocio.verificarConclusaoServico(servico.getTarefas())) {
+//                  servico.setStatusServico(StatusServico.CONCLUIDO);
+//                  LogServico logServico = new LogServico();
+//                  logServico.setLog("Servico " + servico.getCodigoServico() + " foi concluído.");
+//                  logServico.setServico(servico);
+//                  logServico.setDataAlteracao(LocalDateTime.now());
+//                  logServico.setUsuario(usuarioLogado.getUsuario());
+//                  servico.getLogServicos().add(logServico);
+//              }
+//          }
+//
+//          this.servicoDao.salvar(servico);
+          resultado.include("mensagem", new SimpleMessage("success", "mensagem.salvar.sucesso"));
+          //resultado.redirectTo(this).editar(servico.getId());
+          resultado.redirectTo(this).servicosAbertos();
+      } catch (Exception e) {
+          resultado.include("mensagem", new SimpleMessage("error", "mensagem.salvar.error"));
+          resultado.redirectTo(this).editar(servico.getId());
+      }
+  }
     
-    @Post("/servicosCliente")
-    @Transacional
-    public void salvar(Servico servico) {
-        try {
-            //Atribui data de abertura de chamado e caso não haja um técnico reponsável, torna nula a variável de usuário
-            if (servico.getId() == null) {
-                servico.setDataAbertura(LocalDate.now());
-                //servico.setPrioridade(Prioridade.AGUARDANDO_ANALISE);
-                //servico.setDataFechamento(LocalDate.now());
-                if (servico.getTecnico().getId() == null) {
-                    servico.setTecnico(null);
-                }
-            }
-            // Atribui Status do serviço
-            if (servico.getTecnico() == null) {
-                servico.setStatusServico(StatusServico.EM_ESPERA);
-            } else {
-                servico.setStatusServico(StatusServico.EM_EXECUCAO);
-            }
-            //Gera o código de serviço
-            if (servico.getCodigoServico() == null) {
-                servico.setCodigoServico(servicosNegocio.gerarCodigoServico());
-                if (servico.getTarefas() != null) {
-                    if (!servico.getTarefas().isEmpty()) {
-                        servicosNegocio.gerarCodigoTarefas(servico.getCodigoServico(), servico.getTarefas());
-                    }
-                }
-            } else {
-                if (servico.getTarefas() != null) {
-                    servicosNegocio.gerarCodigoTarefas(servico.getCodigoServico(), servico.getTarefas());
-                }
-            }
-            //Gera Log do serviço
-            servicosNegocio.gerarLog(servico);
-            if (servico.getTarefas() != null) {
-                if (servicosNegocio.verificarConclusaoServico(servico.getTarefas())) {
-                    servico.setStatusServico(StatusServico.CONCLUIDO);
-                    LogServico logServico = new LogServico();
-                    logServico.setLog("Servico " + servico.getCodigoServico() + " foi concluído.");
-                    logServico.setServico(servico);
-                    logServico.setDataAlteracao(LocalDateTime.now());
-                    logServico.setUsuario(usuarioLogado.getUsuario());
-                    servico.getLogServicos().add(logServico);
-                }
-            }
-           
 
-            this.servicoDao.salvar(servico);
-            resultado.include("mensagem", new SimpleMessage("success", "mensagem.salvar.sucesso"));
-            resultado.redirectTo(this).editar(servico.getId());
-        } catch (Exception e) {
-            resultado.include("mensagem", new SimpleMessage("error", "mensagem.salvar.error"));
-            resultado.redirectTo(this).editar(servico.getId());
-        }
-    }
 //    public void logServico(Long id) {
 //        Servico servico = servicoDao.BuscarPorId(id);
 //        resultado.include("listaLogs", servico.getLogServicos());
@@ -209,11 +242,18 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
 //        resultado.include("servicos", servicos);
 //    }
     
+   // lista serviços por setor para o cliente
     @Path("/servicosAberto")
   public void servicosAbertos() {
     	List<Servico> servicos = this.servicoDao.listarPorSetorEmAberto(usuarioLogado.getUsuario().getSetor().getId());
         resultado.include("servicos", servicos);
   }
+    
+    //Verificar serviço aberto no setor
+//     public void verificarServicosAbertos() {
+//    	List<Servico> servicos = this.servicoDao.listarPorSetorEmAberto(usuarioLogado.getUsuario().getSetor().getId());
+//        resultado.include("verificar", servicos);
+//    }
 
     public void detalhes(Long id) {
         Servico servico = servicoDao.BuscarPorId(id);
@@ -284,12 +324,14 @@ public class ServicosClienteController extends ControladorSisInt<Servico> {
             resultado.redirectTo(InicioClienteController.class).index2();
         } else {
             Servico servico = this.servicoDao.BuscarPorId(id);
-            resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+           // resultado.include("setores", servicosNegocio.geraListaOpcoesSetor());
+            resultado.include("setores", setorDao.SetorServicos(usuarioLogado.getUsuario().getSetor().getId()));
             resultado.include("usuarios", servicosNegocio.geraListaOpcoesUsuarios());
             resultado.include("status", OpcaoSelect.toListaOpcoes(StatusServico.values()));
             resultado.include("statusTarefa", OpcaoSelect.toListaOpcoes(StatusTarefa.values()));
             resultado.include("prioridades", OpcaoSelect.toListaOpcoes(Prioridade.values()));
             resultado.include("listaLogs", servico.getLogServicos());
+           // resultado.include("sts", servico.getStatusServico());
             resultado.include(servico);
             resultado.of(this).form();
         }

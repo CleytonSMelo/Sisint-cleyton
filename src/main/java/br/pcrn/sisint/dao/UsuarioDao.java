@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 public interface UsuarioDao extends EntidadeDao<Usuario> {
 
-    Optional<Usuario> buscarPorLogin(String login);
+    Optional<Usuario> buscarPorLogin(String cpf);
     List<Usuario> listarAptos();
     
     @Override
@@ -22,7 +22,7 @@ public interface UsuarioDao extends EntidadeDao<Usuario> {
     @Override
     List<Usuario> listar2();
     
-    
-    
+    //Listar todos os usuarios por setor
+    List<Usuario> listarTodososUsuariosPorSetor(Long id);
     
 }

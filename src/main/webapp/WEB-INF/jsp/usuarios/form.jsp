@@ -37,11 +37,11 @@
                             <input class="form-control" required minlength="3" id="nome-usuario" name="usuario.nome" type="text" value="${usuario.nome}">
                             <div class="help-block with-errors"></div>
                         </div>
-                        <div class="form-group">
-                            <label for="login-usuario">Login</label>
-                            <input class="form-control" required minlength="4" id="login-usuario" name="usuario.login" type="text" value="${usuario.login}">
-                            <div class="help-block with-errors"></div>
-                        </div>
+<!--                         <div class="form-group"> -->
+<!--                             <label for="login-usuario">Login</label> -->
+<%--                             <input class="form-control" required minlength="4" id="login-usuario" name="usuario.login" type="text" value="${usuario.login}"> --%>
+<!--                             <div class="help-block with-errors"></div> -->
+<!--                         </div> -->
                         <div class="form-group">
                             <label for="matricula-usuario">Matricula</label>
                             <input class="form-control" data-pattern-error="Formato esperado: XXX.XXX-X"
@@ -49,6 +49,15 @@
                                    id="matricula-usuario" name="usuario.matricula" required type="text" value="${usuario.matricula}">
                             <div class="help-block with-errors"></div>
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="cpf-usuario">CPF</label>
+                            <input class="form-control" data-pattern-error="Formato esperado: XXXXXXXXXXX"
+                                   maxlength="11" pattern="[0-9]{11}" placeholder="Ex.: 22222222222"
+                                   id="cpf-usuario" name="usuario.cpf" required type="text" value="${usuario.cpf}">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        
                         <div class="form-group">
                             <label for="tipo-usuario">Tipo</label>
                             <select required class="form-control" id="tipo-usuario" name="usuario.tipoUsuario" type="text">

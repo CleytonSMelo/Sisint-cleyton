@@ -35,7 +35,8 @@ $(function () {
         var dataAbertura = $("input[name='servico.dataAbertura']");
         var dataFechamento = $("input[name='servico.dataFechamento']");
         var descricao = $("textarea[name='servico.descricao']");
-        var statusServico = $("select[name='servico.statusServico']");
+       // var statusServico = $("select[name='servico.statusServico']");
+        var statusServico = $("input[name='servico.statusServico']");
 
         // console.log(titulo.val() + dataAbertura.val() + dataFechamento.val() + descricao.val());
         // var dateteste =  moment.utc(dataAbertura.val());

@@ -31,7 +31,7 @@
                 <img src="${ctx}/resources/imagens/logo-transp.png" style="width: 100%;"/>
             </div>
             <form method="post" action="${linkTo[LoginController].login}">
-                <input id="login-usuario" type="text" class="form-control" name="usuario.login" placeholder="Login" autofocus>
+                <input id="login-usuario" type="text" class="form-control" name="usuario.cpf" maxlength="11" pattern="[0-9]{11}" placeholder="Login" autofocus>
                 <p></p>
                 <input id="senha-usuario" type="password" class="form-control" name="usuario.senha" placeholder="Senha">
                 <jsp:include page="/WEB-INF/jsp/erros/msgError.jsp"/>

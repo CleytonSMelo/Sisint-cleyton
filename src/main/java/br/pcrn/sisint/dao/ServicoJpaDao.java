@@ -138,7 +138,7 @@ public class ServicoJpaDao extends EntidadeJpaDao<Servico> implements ServicoDao
     @Override
     public List<Servico> listarPorSetorEmAberto(Long id) {
         Query query = manager.createQuery("select s from Servico s " +
-                                             "where (s.statusServico ='EM_ESPERA' OR s.statusServico = 'EM_EXECUCAO') AND s.deletado = false AND s.setor.id = :id");
+                                             "where (s.statusServico ='EM_ESPERA' OR s.statusServico = 'EM_EXECUCAO') AND s.deletado = false AND s.setor.id = :id"+" ORDER BY s.id DESC");
         query.setParameter("id", id);
         return query.getResultList();
     }

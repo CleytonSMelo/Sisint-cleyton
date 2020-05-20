@@ -29,11 +29,18 @@ public class UsuarioJpaDao extends EntidadeJpaDao<Usuario> implements UsuarioDao
     }
     // faz o controle o login, mas com consulta por setor, se estiver deletado o mesmo não efetuara o login
     @Override
-    public Optional<Usuario> buscarPorLogin(String login) {
+    public Optional<Usuario> buscarPorLogin(String cpf) {
            // Query query = this.manager.createQuery("SELECT p from Usuario p where p.login = :login AND p.deletado = false");
-            Query query = this.manager.createQuery("SELECT p from Usuario p "+"join Setor s "+"on p.setor.id = s.id"+" where p.login = :login AND p.deletado = false AND s.deletado = false");
-            query.setParameter("login",login);
+            Query query = this.manager.createQuery("SELECT p from Usuario p "+"join Setor s "+"on p.setor.id = s.id"+" where p.cpf = :cpf AND p.deletado = false AND s.deletado = false");
+            query.setParameter("cpf",cpf);
             return query.setMaxResults(1).getResultList().stream().findFirst();
+    }
+    
+    public List<Usuario> listarTodososUsuariosPorSetor(Long id) {
+        Query query = manager.createQuery("select u from Usuario u "+  
+                                             "where u.deletado = false AND u.setor.id = :id "+" ORDER BY u.id DESC");
+        query.setParameter("id", id);
+        return query.getResultList();
     }
 
 //    @Override

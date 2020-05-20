@@ -69,8 +69,8 @@ $(function () {
         id = $("input[name='servico.id']").val();
         dataFechamento = $("input[name='servico.dataFechamento']").val();
         descricao = $("textarea[name='servico.descricao']").val();
-        prioridade = $("select[name='servico.prioridade']").val();
-        tecnico = $("select[name='servico.tecnico']").val();
+       // prioridade = $("select[name='servico.prioridade']").val();
+       // tecnico = $("select[name='servico.tecnico']").val();
         setor = $("select[name='servico.setor']").val();
     }
 

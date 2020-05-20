@@ -11,6 +11,7 @@ import br.pcrn.sisint.dao.EquipamentoDao;
 import br.pcrn.sisint.dao.ManutencaoDao;
 import br.pcrn.sisint.dao.ServicoDao;
 import br.pcrn.sisint.dao.TarefaDao;
+import br.pcrn.sisint.dao.UsuarioDao;
 import br.pcrn.sisint.dominio.StatusManutencao;
 import br.pcrn.sisint.dominio.StatusServico;
 import br.pcrn.sisint.dominio.TipoUsuario;
@@ -32,7 +33,8 @@ public class InicioClienteController extends Controlador {
     private ManutencaoDao manutencaoDao;
     private EquipamentoDao equipamentoDao;
     private DashboardNegocio dashboardNegocio;
-
+    private UsuarioDao usuarioDao;
+    
     @Inject
     private Validator validator;
     
@@ -40,19 +42,20 @@ public class InicioClienteController extends Controlador {
     private UsuarioLogado usuarioLogado;
 
     protected InicioClienteController() {
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null);
     }
     
     
     @Inject
     public InicioClienteController(Result resultado, ServicoDao servicoDao, TarefaDao tarefaDao, ManutencaoDao manutencaoDao,
-                            EquipamentoDao equipamentoDao, DashboardNegocio dashboardNegocio) {
+                            EquipamentoDao equipamentoDao, DashboardNegocio dashboardNegocio, UsuarioDao usuarioDao) {
         super(resultado);
         this.servicoDao = servicoDao;
         this.tarefaDao = tarefaDao;
         this.manutencaoDao = manutencaoDao;
         this.equipamentoDao = equipamentoDao;
         this.dashboardNegocio = dashboardNegocio;
+        this.usuarioDao = usuarioDao;
     }
 
 //    public void informacoesDashboard() {
@@ -81,6 +84,7 @@ public class InicioClienteController extends Controlador {
 		 */
     	//resultado.include("meusServicos", servicoDao.meusServicos());
     	//carrega a lista de serviços do cliente
+    	resultado.include("usuariosSetor", usuarioDao.listarTodososUsuariosPorSetor(usuarioLogado.getUsuario().getSetor().getId()));
     	resultado.include("todosServicos", servicoDao.listarPorSetorUltimosAberto(usuarioLogado.getUsuario().getSetor().getId()));
     }
    

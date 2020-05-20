@@ -13,7 +13,6 @@
 
 <!DOCTYPE html>
 <tags:layout>
-
     <jsp:attribute name="cabecalho">
         <meta http-equiv="refresh" content="300" url="${linkTo[InicioClienteController].index2}">
     </jsp:attribute>
@@ -23,8 +22,23 @@
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <%--         <script src="${ctx}/resources/js/dashboard/dashboard.js"></script> --%>
-    </jsp:attribute>
+    </jsp:attribute>  
     <jsp:body>
+    
+     <style>
+     
+         div.scroll { 
+                margin:4px;  
+                padding:15px; 
+               
+                 width: auto;  
+                 height: 446px;  
+                overflow-x: hidden; 
+                overflow-x: auto; 
+                text-align:justify; 
+            } 
+     </style>
+    
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Informações dos Serviços</h1>
@@ -32,7 +46,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             
-            <div class="col-lg-12">
+            <div class="col-lg-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bell fa-fw"></i> Últimos Serviços Solicitados
@@ -63,7 +77,27 @@
                     <!-- /.panel -->
                 </div>
             
-            
+                 <div class="col-lg-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-user"></i> Usuários do Setor
+                        </div>
+                       
+                        
+                        <div class="panel-body scroll">
+                            <div class="list-group">                            
+                                <c:forEach items="${usuariosSetor}" var="usuario">
+                                    <li class="list-group-item">${usuario.nome}
+                          
+                                        
+                                    </li>                         
+                                </c:forEach>                           
+                             </div>
+                        </div>     
+                        
+                   </div>
+                    <!-- /.panel -->
+                </div>       
             <!-- /.row -->
             <%-- <div class="row">
                 <div class="col-lg-3 col-md-6">

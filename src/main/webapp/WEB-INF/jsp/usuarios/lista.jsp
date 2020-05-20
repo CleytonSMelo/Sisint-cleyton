@@ -96,7 +96,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nome</th>
-                            <th>Login</th>
+                            <th>Cpf</th>
                             <th>Email</th>
                             <th>Telefone</th>
                             <th>Tipo</th> 
@@ -111,7 +111,7 @@
                             <tr>
                                 <td>${usuario.id}</td>
                                 <td>${usuario.nome}</td>
-                                <td>${usuario.login}</td>
+                                <td>${usuario.cpf}</td>
                                 <td>${usuario.email}</td>
                                 <td>${usuario.telefone}</td>
                                 <td>${usuario.tipoUsuario.valor}</td> 

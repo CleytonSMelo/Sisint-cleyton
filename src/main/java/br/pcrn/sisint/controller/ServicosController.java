@@ -118,7 +118,7 @@ public class ServicosController extends ControladorSisInt<Servico> {
 
             this.servicoDao.salvar(servico);
             resultado.include("mensagem", new SimpleMessage("success", "mensagem.salvar.sucesso"));
-            resultado.redirectTo(this).editar(servico.getId());
+            resultado.redirectTo(this).form();
         } catch (Exception e) {
             resultado.include("mensagem", new SimpleMessage("error", "mensagem.salvar.error"));
             resultado.redirectTo(this).editar(servico.getId());

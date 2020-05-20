@@ -46,17 +46,17 @@ $(document).ready( function () {
         }
     });
 
-    $('#data-fechamento-servico').datepicker().on('changeDate', function (ev) {
-        verificarInputsServico();
-    });
-
-    $('#prioridade-servico').change( function (event) {
-        verificarInputsServico();
-    });
-
-    $('#tecnico-servico').change( function (event) {
-        verificarInputsServico();
-    });
+//    $('#data-fechamento-servico').datepicker().on('changeDate', function (ev) {
+//        verificarInputsServico();
+//    });
+//
+//    $('#prioridade-servico').change( function (event) {
+//        verificarInputsServico();
+//    });
+//
+//    $('#tecnico-servico').change( function (event) {
+//        verificarInputsServico();
+//    });
 
     $('#servico-descricao').keyup( function (event) {
         verificarInputsServico();
@@ -64,11 +64,10 @@ $(document).ready( function () {
 
     function verificarInputsServico() {
         if ($('#titulo-servico').val() == "" || $('#telRetorno-servico').val() == "" || $('#nomeSolicitante-servico').val() == "" ||
-            $('#setor-servico').val() == "" || $('#data-fechamento-servico').val() == "" || $('#prioridade-servico').val() == "" ||
-            $('#tecnico-servico').val() == "" || $('#servico-descricao').val() == "") {
-            $('#btnAdicionarTarefa').attr("disabled", "disabled");
+            $('#setor-servico').val() == "" || $('#servico-descricao').val() == "") {
+            $('#btnSalvarServico').attr("disabled", "disabled");
         } else {
-            $('#btnAdicionarTarefa').removeAttr("disabled");
+            $('#btnSalvarServico').removeAttr("disabled");
         }
     }
 });

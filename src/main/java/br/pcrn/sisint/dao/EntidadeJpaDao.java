@@ -66,6 +66,6 @@ public abstract class EntidadeJpaDao<T extends Entidade> implements EntidadeDao<
     //Mostrar setores para o cliente
     @Override
     public Collection<T> todos2() {
-        return manager.createQuery("SELECT t FROM "+tClass.getSimpleName()+" t where t.deletado = false").getResultList();
+        return manager.createQuery("SELECT t FROM "+tClass.getSimpleName()+" t where t.deletado = false AND t.id<>88").getResultList();
     }
 }
